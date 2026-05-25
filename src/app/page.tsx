@@ -34,6 +34,8 @@ export default function Home() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formValues, setFormValues] = useState({ name: "", email: "", subject: "", message: "" });
   const [formErrors, setFormErrors] = useState({ name: "", email: "", message: "" });
+  const [formIsSending, setFormIsSending] = useState(false);
+  const [formFeedback, setFormFeedback] = useState("");
 
   // Custom Scroll Spy logic using IntersectionObserver
   useEffect(() => {
@@ -126,7 +128,7 @@ export default function Home() {
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errors = { name: "", email: "", message: "" };
     let hasError = false;
@@ -152,12 +154,32 @@ export default function Home() {
       return;
     }
 
-    setFormSubmitted(true);
-    // Reset values after a mock success
-    setTimeout(() => {
-      setFormValues({ name: "", email: "", subject: "", message: "" });
-      setFormSubmitted(false);
-    }, 6000);
+    setFormIsSending(true);
+    setFormFeedback("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setFormSubmitted(true);
+        setFormValues({ name: "", email: "", subject: "", message: "" });
+        setFormFeedback("");
+      } else {
+        setFormFeedback(data.error || "Failed to dispatch transmission.");
+      }
+    } catch (err) {
+      setFormFeedback("Transmission failed. Server did not respond.");
+    } finally {
+      setFormIsSending(false);
+    }
   };
 
   return (
@@ -317,10 +339,11 @@ export default function Home() {
 
                 <div className="mt-8 pt-4 border-t border-white/5">
                   <a
-                    href="#contact"
+                    href="/shavez_khan_CV.pdf"
+                    download="Shavez_Khan_CV.pdf"
                     className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-xs font-bold text-white transition-all duration-300"
                   >
-                    Request Detailed CV <Download className="w-4 h-4" />
+                    Download CV <Download className="w-4 h-4" />
                   </a>
                 </div>
               </div>
@@ -539,7 +562,7 @@ export default function Home() {
             <p className="text-3xl font-extrabold tracking-tight text-white">Featured Engineering Work</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
             <ProjectCard
               title="Data Analytics Dashboard"
               category="Full-Stack & BI"
@@ -767,11 +790,26 @@ export default function Home() {
                       )}
                     </div>
 
+                    {formFeedback && (
+                      <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold mt-2">
+                        {formFeedback}
+                      </div>
+                    )}
+
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center gap-2 py-4.5 px-6 rounded-xl bg-gradient-to-r from-accent-cyan via-accent-blue to-accent-purple font-bold text-white shadow-lg hover:shadow-cyan-500/10 hover:scale-[1.01] transition-all duration-300 mt-4 cursor-pointer"
+                      disabled={formIsSending}
+                      className="w-full flex items-center justify-center gap-2 py-4.5 px-6 rounded-xl bg-gradient-to-r from-accent-cyan via-accent-blue to-accent-purple font-bold text-white shadow-lg hover:shadow-cyan-500/10 hover:scale-[1.01] transition-all duration-300 mt-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Transmit Message <Send className="w-4 h-4 shrink-0" />
+                      {formIsSending ? (
+                        <>
+                          Transmitting Payload... <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                        </>
+                      ) : (
+                        <>
+                          Transmit Message <Send className="w-4 h-4 shrink-0" />
+                        </>
+                      )}
                     </button>
                   </form>
                 )}
