@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ArrowUpRight, CheckCircle2, ChevronDown, ChevronUp, Github, Link2 } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, ChevronDown, ChevronUp, Github, Globe, Link2, Settings } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -13,6 +13,7 @@ interface ProjectCardProps {
   imageSrc: string;
   githubUrl?: string;
   liveUrl?: string;
+  liveUrlAdmin?: string;
   accentClass: string;
   glowClass: string;
 }
@@ -26,6 +27,7 @@ export function ProjectCard({
   imageSrc,
   githubUrl,
   liveUrl,
+  liveUrlAdmin,
   accentClass,
   glowClass,
 }: ProjectCardProps) {
@@ -58,7 +60,7 @@ export function ProjectCard({
           <h3 className="text-xl font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors duration-300">
             {title}
           </h3>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center flex-wrap gap-2 justify-end">
             {githubUrl && (
               <a
                 href={githubUrl}
@@ -70,7 +72,7 @@ export function ProjectCard({
                 <Github className="w-4 h-4" />
               </a>
             )}
-            {liveUrl && (
+            {liveUrl && !liveUrlAdmin && (
               <a
                 href={liveUrl}
                 target="_blank"
@@ -80,6 +82,28 @@ export function ProjectCard({
               >
                 <ArrowUpRight className="w-4 h-4" />
               </a>
+            )}
+            {liveUrl && liveUrlAdmin && (
+              <>
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/5 text-[10px] font-bold text-slate-400 hover:text-white hover:bg-white/10 transition-colors duration-300"
+                  title="View Live User App"
+                >
+                  <Globe className="w-3.5 h-3.5 text-accent-cyan" /> <span>User Portal</span>
+                </a>
+                <a
+                  href={liveUrlAdmin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/5 text-[10px] font-bold text-slate-400 hover:text-white hover:bg-white/10 transition-colors duration-300"
+                  title="View Live Admin Panel"
+                >
+                  <Settings className="w-3.5 h-3.5 text-accent-blue" /> <span>Admin Panel</span>
+                </a>
+              </>
             )}
           </div>
         </div>

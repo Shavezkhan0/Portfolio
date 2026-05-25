@@ -552,7 +552,7 @@ export default function Home() {
               ]}
               tags={["Next.js", "Flask", "SQL Server", "PostgreSQL", "Chart.js", "Docker"]}
               imageSrc="/images/data_analytics_dashboard.png"
-              githubUrl="https://github.com/Shavezkhan0"
+              githubUrl="https://github.com/Shavezkhan0/dashboard-monorepo"
               accentClass="bg-accent-cyan/15 text-accent-cyan border-accent-cyan/30"
               glowClass="bg-accent-cyan/10"
             />
@@ -569,7 +569,7 @@ export default function Home() {
               ]}
               tags={["FastAPI", "React.js", "PostgreSQL", "pgvector", "LangChain", "ChromaDB"]}
               imageSrc="/images/academic_decision_support.png"
-              githubUrl="https://github.com/Shavezkhan0"
+              githubUrl="https://github.com/Shavezkhan0/AI_assignment_RAG_Twitter"
               accentClass="bg-accent-purple/15 text-accent-purple border-accent-purple/30"
               glowClass="bg-accent-purple/10"
             />
@@ -586,7 +586,9 @@ export default function Home() {
               ]}
               tags={["Flutter", "Dart", "Next.js", "Node.js", "Express.js", "MongoDB"]}
               imageSrc="/images/food_delivery_platform.png"
-              githubUrl="https://github.com/Shavezkhan0"
+              githubUrl="https://github.com/Shavezkhan0/Food_Ordering_Platform"
+              liveUrl="https://food-ordering-platform-flame.vercel.app/"
+              liveUrlAdmin="https://food-ordering-platform-7mv3.vercel.app/login"
               accentClass="bg-accent-blue/15 text-accent-blue border-accent-blue/30"
               glowClass="bg-accent-blue/10"
             />
