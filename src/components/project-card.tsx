@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ArrowUpRight, CheckCircle2, ChevronDown, ChevronUp, Github, Globe, Link2, Settings } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, ChevronDown, ChevronUp, Github, Globe, Settings } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -44,7 +44,7 @@ export function ProjectCard({
           src={imageSrc}
           alt={title}
           fill
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:rotate-1"
+          className="object-cover transition-transform duration-400 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
         />

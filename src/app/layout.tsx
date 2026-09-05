@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
+import { LenisProvider } from "@/components/lenis-provider";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -51,7 +52,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans selection:bg-accent-purple/30 selection:text-white" suppressHydrationWarning>
-        {children}
+        <LenisProvider>{children}</LenisProvider>
       </body>
     </html>
   );

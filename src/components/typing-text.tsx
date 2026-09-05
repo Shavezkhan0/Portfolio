@@ -26,7 +26,12 @@ export function TypingText({
     if (isDeleting) {
       // Deleting character behavior
       timer = setTimeout(() => {
-        setCurrentText((prev) => prev.slice(0, -1));
+        if (currentText.length <= 1) {
+          setIsDeleting(false);
+          setCurrentTextIndex((prev) => (prev + 1) % texts.length);
+        } else {
+          setCurrentText((prev) => prev.slice(0, -1));
+        }
       }, deletingSpeed);
     } else {
       // Typing character behavior
@@ -38,12 +43,6 @@ export function TypingText({
     // Handle transition when typing completes
     if (!isDeleting && currentText === fullText) {
       timer = setTimeout(() => setIsDeleting(true), delayBetweenTexts);
-    }
-
-    // Handle transition when deleting completes
-    if (isDeleting && currentText === "") {
-      setIsDeleting(false);
-      setCurrentTextIndex((prev) => (prev + 1) % texts.length);
     }
 
     return () => clearTimeout(timer);

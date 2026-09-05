@@ -156,10 +156,11 @@ export async function POST(request: Request) {
       success: true,
       message: "Transmission dispatched successfully. Message sent via SMTP."
     });
-  } catch (error: any) {
-    console.error("SMTP DISPATCH ERROR:", error);
+  } catch (error) {
+    const err = error instanceof Error ? error : new Error(String(error));
+    console.error("SMTP DISPATCH ERROR:", err);
     return NextResponse.json(
-      { error: "Transmission pipeline encountered an error: " + (error?.message || error) },
+      { error: "Transmission pipeline encountered an error: " + (err.message || err) },
       { status: 500 }
     );
   }

@@ -8,7 +8,7 @@
   --accent-cyan: #06b6d4;
   --card-bg: rgba(11, 15, 25, 0.75);
   --border-color: rgba(31, 41, 55, 0.6);
-  --grid-color: rgba(59, 130, 246, 0.035);
+  --grid-color: rgba(59, 130, 246, 0.025);
 }
 
 @theme inline {
@@ -23,6 +23,7 @@
   --font-heading: var(--font-outfit), sans-serif;
 }
 
+/* ── Base ──────────────────────────────────────────── */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -34,29 +35,42 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-outfit), sans-serif;
 }
 
-/* Beautiful Interactive Grid Background Effect */
+/* Smooth Scrolling — Lenis overrides the native */
+html {
+  scroll-behavior: auto; /* Lenis handles this */
+  scroll-padding-top: 80px;
+}
+
+/* ── Grid Background ───────────────────────────────── */
 .bg-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
+  background-size: 44px 44px;
+  background-image:
     linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
 }
 
+/* ── Radial Glows ──────────────────────────────────── */
 .radial-glow {
-  background: radial-gradient(circle 800px at center, rgba(139, 92, 246, 0.08), transparent 80%);
+  background: radial-gradient(circle 900px at center, rgba(139, 92, 246, 0.07), transparent 80%);
 }
 
 .radial-glow-cyan {
-  background: radial-gradient(circle 600px at center, rgba(6, 182, 212, 0.06), transparent 75%);
+  background: radial-gradient(circle 700px at center, rgba(6, 182, 212, 0.055), transparent 75%);
 }
 
-/* Glassmorphism Styles */
+.radial-glow-blue {
+  background: radial-gradient(circle 800px at center, rgba(59, 130, 246, 0.045), transparent 80%);
+}
+
+/* ── Glassmorphism ─────────────────────────────────── */
 .glass-panel {
-  background: rgba(11, 15, 25, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(11, 15, 25, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .glass-panel-hover {
@@ -64,31 +78,70 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .glass-panel-hover:hover {
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.25);
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(139, 92, 246, 0.25);
+  box-shadow:
+    0 12px 48px -10px rgba(139, 92, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transform: translateY(-4px);
 }
 
-/* Customized Timeline Styles */
-.timeline-line {
-  background: linear-gradient(to bottom, var(--accent-purple), var(--accent-blue), transparent);
+/* ── GSAP Animation Initial States ────────────────── */
+/* Prevent FOUC — elements start hidden via GSAP */
+.hero-word,
+#hero-badge,
+#hero-subtitle,
+#hero-desc,
+.hero-btn {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+.exp-card,
+.project-card-anim,
+.skill-card,
+.contact-item {
+  will-change: transform, opacity;
 }
 
-/* Custom Keyframe Animations */
+/* ── Timeline ──────────────────────────────────────── */
+#timeline-line {
+  transform-origin: top center;
+}
+
+/* ── Tech Pills ────────────────────────────────────── */
+.tech-pill {
+  animation: techFloat 3s ease-in-out infinite;
+}
+
+.tech-pill:nth-child(odd) {
+  animation-direction: alternate;
+}
+
+@keyframes techFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ── Custom Scrollbar ──────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #030712; }
+::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+/* ── Showcase Section ──────────────────────────────── */
+.showcase-slide {
+  will-change: transform;
+}
+
+.slide-content {
+  will-change: transform, opacity;
+}
+
+/* ── Utility Animations ────────────────────────────── */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-10px) scale(1.02);
-  }
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.02); }
 }
 
 .animate-float {
@@ -96,34 +149,24 @@ html {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.04); }
 }
 
 .animate-pulse-glow {
   animation: pulse-glow 4s ease-in-out infinite;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* ── Gradient text utility ─────────────────────────── */
+.gradient-text-cyan-purple {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-::-webkit-scrollbar-track {
-  background: #030712;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1f2937;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+/* ── Selection ─────────────────────────────────────── */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: white;
 }
