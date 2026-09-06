@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LazyImage } from "@/components/lazy-image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -111,11 +111,10 @@ export function WorkShowcase({ slides }: WorkShowcaseProps) {
             key={i}
             className="showcase-slide relative flex-shrink-0 w-[75vw] md:w-[55vw] lg:w-[45vw] h-[65vh] rounded-2xl overflow-hidden group"
           >
-            <Image
+            <LazyImage
               src={slide.imageSrc}
               alt={slide.title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 75vw, 45vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
