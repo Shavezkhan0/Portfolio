@@ -74,6 +74,7 @@ const showcaseSlides = [
     tags: ["Flutter", "Dart", "REST APIs"],
     accent: "bg-teal-500",
   },
+  
   {
     title: "Mobile Attendance & Salary",
     description: "Employees can mark attendance, view salary slips, check assigned events and update profile information directly from their mobile device.",
