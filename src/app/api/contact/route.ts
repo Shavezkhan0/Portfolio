@@ -62,16 +62,16 @@ export async function POST(request: Request) {
 
     // High-fidelity HTML formatted email template styled in dark Obsidian themes
     const htmlContent = `
-      <div style="background-color: #030712; padding: 32px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-        <div style="max-width: 580px; margin: 0 auto; background-color: #0b0f19; border: 1px solid #1f2937; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);">
+      <div style="background-color: #09090b; padding: 32px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <div style="max-width: 580px; margin: 0 auto; background-color: #121215; border: 1px solid #26262c; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);">
           
           <!-- Top Gradient Accent Line -->
-          <div style="height: 4px; background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%); background-color: #06b6d4;"></div>
+          <div style="height: 4px; background: linear-gradient(90deg, #f59e0b 0%, #b45309 50%, #92400e 100%); background-color: #f59e0b;"></div>
           
           <!-- Header Area -->
-          <div style="padding: 28px 32px 20px 32px; text-align: center; border-bottom: 1px solid #1f2937;">
-            <div style="display: inline-block; background-color: #0c4a6e; border: 1px solid #0284c7; border-radius: 6px; padding: 4px 10px; margin-bottom: 12px;">
-              <span style="color: #38bdf8; font-family: monospace; font-size: 10px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase;">
+          <div style="padding: 28px 32px 20px 32px; text-align: center; border-bottom: 1px solid #26262c;">
+            <div style="display: inline-block; background-color: #1b1b20; border: 1px solid #f59e0b; border-radius: 6px; padding: 4px 10px; margin-bottom: 12px;">
+              <span style="color: #f59e0b; font-family: monospace; font-size: 10px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase;">
                 transmission_pipeline: active
               </span>
             </div>
@@ -90,21 +90,21 @@ export async function POST(request: Request) {
                 <td style="padding: 12px 0; color: #64748b; font-size: 11.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; width: 120px;">Sender Name:</td>
                 <td style="padding: 12px 0; color: #ffffff; font-size: 14.5px; font-weight: 600;">${name}</td>
               </tr>
-              <tr style="border-top: 1px solid #1f2937;">
+              <tr style="border-top: 1px solid #26262c;">
                 <td style="padding: 12px 0; color: #64748b; font-size: 11.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Email Address:</td>
-                <td style="padding: 12px 0; color: #3b82f6; font-size: 14.5px; font-weight: 600;">
-                  <a href="mailto:${email}" style="color: #3b82f6; text-decoration: none;">${email}</a>
+                <td style="padding: 12px 0; color: #f59e0b; font-size: 14.5px; font-weight: 600;">
+                  <a href="mailto:${email}" style="color: #f59e0b; text-decoration: none;">${email}</a>
                 </td>
               </tr>
-              <tr style="border-top: 1px solid #1f2937;">
+              <tr style="border-top: 1px solid #26262c;">
                 <td style="padding: 12px 0; color: #64748b; font-size: 11.5px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Subject:</td>
-                <td style="padding: 12px 0; color: #c084fc; font-size: 14.5px; font-weight: 700;">${subject || "General Inquiry"}</td>
+                <td style="padding: 12px 0; color: #f59e0b; font-size: 14.5px; font-weight: 700;">${subject || "General Inquiry"}</td>
               </tr>
             </table>
             
             <!-- Message Content Block -->
-            <div style="background-color: #030712; border: 1px solid #1f2937; border-left: 4px solid #8b5cf6; border-radius: 0 12px 12px 0; padding: 20px; margin-bottom: 28px;">
-              <p style="color: #8b5cf6; font-size: 10px; font-weight: bold; text-transform: uppercase; margin: 0 0 10px 0; letter-spacing: 1px; font-family: monospace;">
+            <div style="background-color: #09090b; border: 1px solid #26262c; border-left: 4px solid #f59e0b; border-radius: 0 12px 12px 0; padding: 20px; margin-bottom: 28px;">
+              <p style="color: #f59e0b; font-size: 10px; font-weight: bold; text-transform: uppercase; margin: 0 0 10px 0; letter-spacing: 1px; font-family: monospace;">
                 Payload Message:
               </p>
               <div style="color: #e2e8f0; font-size: 13.5px; line-height: 1.6; margin: 0; white-space: pre-wrap; font-style: italic;">
@@ -114,14 +114,14 @@ export async function POST(request: Request) {
             
             <!-- Action Button -->
             <div style="text-align: center; margin: 12px 0 8px 0;">
-              <a href="mailto:${email}" style="display: inline-block; background-color: #06b6d4; color: #ffffff; padding: 14px 28px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);">
+              <a href="mailto:${email}" style="display: inline-block; background-color: #f59e0b; color: #ffffff; padding: 14px 28px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">
                 Direct Reply to Sender
               </a>
             </div>
           </div>
           
           <!-- System Metadata / Footer -->
-          <div style="padding: 20px 32px; background-color: #030712; border-top: 1px solid #1f2937; font-size: 11px; color: #475569; font-family: 'Inter', sans-serif;">
+          <div style="padding: 20px 32px; background-color: #09090b; border-top: 1px solid #26262c; font-size: 11px; color: #475569; font-family: 'Inter', sans-serif;">
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
                 <td style="padding: 4px 0; font-weight: 600;">System Dispatch:</td>

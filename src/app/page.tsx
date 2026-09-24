@@ -99,10 +99,19 @@ const showcaseSlides = [
 
 // ─── Page Component ───────────────────────────────────────────────────────────
 
+// New Delhi stays on IST (GMT+5:30) year-round, so a fixed zone is safe.
+const DELHI_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Asia/Kolkata",
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false,
+});
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [themeClicks, setThemeClicks] = useState(0);
+  const [delhiTime, setDelhiTime] = useState("");
   const headerRef = useRef<HTMLElement>(null);
 
   // ── Scroll Spy (ScrollTrigger) ─────────────────────────────────────────────
@@ -136,37 +145,58 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ── GSAP Animations ────────────────────────────────────────────────────────
+  // ── Anti-AI easter egg ─────────────────────────────────────────────────────
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      console.log("Hey there, curious developer! 👋 - Shavez");
-    }
+    console.log("Hey there, curious developer! 👋 - Shavez");
+  }, []);
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
+  // ── Live New Delhi clock (tics on the minute) ────────────────────────────
+  useEffect(() => {
+    const update = () => setDelhiTime(DELHI_FORMATTER.format(new Date()));
+    update();
+    const id = window.setInterval(update, 60_000);
+    return () => window.clearInterval(id);
+  }, []);
 
-    const ctx = gsap.context(() => {
-      // Floating orbs
-      gsap.to(".orb-purple", { y: -30, x: 15, scale: 1.05, duration: 10, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      gsap.to(".orb-cyan", { y: 25, x: -20, scale: 1.08, duration: 12, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      gsap.to(".orb-blue", { y: -20, x: 10, scale: 1.04, duration: 8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2 });
+  // ── Magnetic pill nav (fine pointers only; never under reduced motion) ───
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const links = Array.from(
+      document.querySelectorAll<HTMLElement>(".site-nav-link")
+    );
+    const cleanups: Array<() => void> = [];
+
+    links.forEach((link) => {
+      const xTo = gsap.quickTo(link, "x", { duration: 0.35, ease: "power3" });
+      const yTo = gsap.quickTo(link, "y", { duration: 0.35, ease: "power3" });
+      const onMove = (e: MouseEvent) => {
+        const r = link.getBoundingClientRect();
+        xTo((e.clientX - (r.left + r.width / 2)) * 0.22);
+        yTo((e.clientY - (r.top + r.height / 2)) * 0.22);
+      };
+      const onLeave = () => {
+        xTo(0);
+        yTo(0);
+      };
+      link.addEventListener("mousemove", onMove);
+      link.addEventListener("mouseleave", onLeave);
+      cleanups.push(() => {
+        link.removeEventListener("mousemove", onMove);
+        link.removeEventListener("mouseleave", onLeave);
+      });
     });
 
-    return () => ctx.revert();
+    return () => cleanups.forEach((c) => c());
   }, []);
 
   // ─── JSX ─────────────────────────────────────────────────────────────────
   return (
     <div
-      className="relative min-h-screen bg-background text-foreground bg-grid-pattern antialiased selection:bg-accent-purple/35 selection:text-white"
+      className="relative min-h-screen bg-background text-foreground micro-dots antialiased selection:bg-accent-purple/35 selection:text-white"
       suppressHydrationWarning
     >
-      {/* Background Orbs */}
-      <div className="orb-purple absolute top-0 left-1/4 w-[600px] h-[600px] radial-glow -z-20 pointer-events-none" />
-      <div className="orb-cyan absolute top-1/3 right-1/4 w-[500px] h-[500px] radial-glow-cyan -z-20 pointer-events-none" />
-      <div className="orb-blue absolute bottom-10 left-1/3 w-[700px] h-[700px] radial-glow-blue -z-20 pointer-events-none" />
-
       {/* Skip link */}
       <a href="#home" className="skip-link">
         Skip to content
@@ -182,6 +212,11 @@ export default function Home() {
               <span className="site-nav-role">Software Engineer</span>
             </span>
           </a>
+
+          <span className="nav-status" role="status">
+            <span className="nav-status-dot" aria-hidden="true" />
+            Available for Contract &amp; Full-time
+          </span>
 
           <nav className="site-nav-links" aria-label="Sections">
             {[
@@ -205,6 +240,11 @@ export default function Home() {
           </nav>
 
           <div className="site-nav-actions">
+            <span className="nav-clock" aria-label="Current time in New Delhi">
+              {delhiTime}
+              <span className="nav-clock-zone">IST</span>
+            </span>
+
             <button
               type="button"
               key={themeClicks}

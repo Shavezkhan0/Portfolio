@@ -75,7 +75,7 @@ export function WorkShowcase({ slides }: WorkShowcaseProps) {
   return (
     <div ref={containerRef} className="relative h-screen overflow-hidden">
       <div className="absolute top-8 left-8 z-20 flex flex-col gap-1">
-        <span className="text-xs font-bold uppercase tracking-widest text-accent-cyan">
+        <span className="text-xs font-bold uppercase tracking-widest text-accent-warm">
           ◆ Current Role — Deli Cocktail House
         </span>
         <p className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
@@ -87,7 +87,7 @@ export function WorkShowcase({ slides }: WorkShowcaseProps) {
         <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden">
           <div
             ref={progressRef}
-            className="h-full bg-gradient-to-r from-accent-cyan to-accent-purple rounded-full transition-none"
+            className="h-full bg-gradient-to-r from-accent-warm to-accent-warm rounded-full transition-none"
             style={{ width: "0%" }}
           />
         </div>
@@ -118,7 +118,7 @@ export function WorkShowcase({ slides }: WorkShowcaseProps) {
               sizes="(max-width: 768px) 75vw, 45vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-            <div className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 ${slide.accent}`} />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500 bg-accent-warm" />
             <div className="slide-content absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-3">
               <div className="flex flex-wrap gap-1.5">
                 {slide.tags.map((tag) => (
